@@ -2,11 +2,11 @@
 backend/venv/
 __pycache__/
 
-# Environment variables
-backend/.env
+# Database
+backend/*.db
 
-# Database (اختياري)
-backend/ramadan.db
+# Environment
+backend/.env
 
 # Node
 frontend/node_modules/
