@@ -8,7 +8,7 @@ export default function Assistant() {
     const [response, setResponse] = useState("");
 
     async function askAI() {
-        const res = await fetch("http://127.0.0.1:8000/assistant", {
+        const res = await fetch("https://ramadan-companion-production.up.railway.app/assistant", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

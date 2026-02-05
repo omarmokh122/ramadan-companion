@@ -6,7 +6,7 @@ export default function Dashboard() {
     const [daily, setDaily] = useState(null);
 
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/daily/10")
+        fetch("https://ramadan-companion-production.up.railway.app/daily/10")
             .then((res) => res.json())
             .then(setDaily);
     }, []);
