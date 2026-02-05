@@ -1,25 +1,47 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Assistant() {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const [user, setUser] = useState(null);
     const [message, setMessage] = useState("");
     const [response, setResponse] = useState("");
 
+    // 👇 localStorage فقط بعد ما الصفحة تشتغل على المتصفح
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+
     async function askAI() {
-        const res = await fetch("https://ramadan-companion-production.up.railway.app/assistant", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                user_id: user.id,
-                message,
-                day: 12,
-            }),
-        });
+        if (!user) return;
+
+        const res = await fetch(
+            "https://ramadan-companion-production.up.railway.app/assistant",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    user_id: user.id,
+                    message,
+                    day: 12,
+                }),
+            }
+        );
 
         const data = await res.json();
         setResponse(data.response);
+    }
+
+    // 👇 أثناء التحميل الأول
+    if (!user) {
+        return (
+            <main className="min-h-screen bg-black text-white flex items-center justify-center">
+                <p>جاري التحميل...</p>
+            </main>
+        );
     }
 
     return (
